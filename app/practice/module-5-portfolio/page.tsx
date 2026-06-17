@@ -98,37 +98,70 @@ const ProjectsGrid = () => {
   ]
 
   return (
-    <section id="projects" className="py-16 px-6 bg-gray-50">
+    <section id="projects" className="py-20 px-6 bg-gray-50">
       <div className="max-w-6xl mx-auto">
-        <h3 className="text-4xl font-bold mb-12 text-center">Recent Projects</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <h2 className="text-4xl font-bold mb-12 text-center text-gray-900">Featured Projects</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map(project => (
             <div
               key={project.id}
-              className="bg-white rounded-lg shadow hover:shadow-lg transition p-6"
+              className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col"
             >
-              <div className="bg-gray-200 h-32 rounded mb-4 flex items-center justify-center">
-                <span className="text-gray-400">Image</span>
+              {/* Image Placeholder */}
+              <div className="bg-gray-200 h-48 flex items-center justify-center border-b border-gray-100">
+                <svg
+                  className="w-12 h-12 text-gray-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  />
+                </svg>
               </div>
-              <h4 className="text-xl font-semibold mb-2 text-gray-900">{project.title}</h4>
-              <p className="text-gray-600 mb-4 text-sm">{project.description}</p>
-              <div className="flex flex-wrap gap-2 mb-4">
-                {project.tags.map(tag => (
-                  <span
-                    key={tag}
-                    className="bg-blue-100 text-blue-700 text-xs px-3 py-1 rounded-full"
+
+              <div className="p-6 flex flex-col flex-grow">
+                <h3 className="text-xl font-bold mb-2 text-gray-900">{project.title}</h3>
+                <p className="text-gray-600 mb-4 text-sm leading-relaxed flex-grow">
+                  {project.description}
+                </p>
+
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {project.tags.map(tag => (
+                    <span
+                      key={tag}
+                      className="bg-blue-50 text-blue-600 text-xs font-semibold px-2.5 py-0.5 rounded"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                <a
+                  href={project.link}
+                  className="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold text-sm transition-colors"
+                  aria-label={`View details for ${project.title}`}
+                >
+                  View Project
+                  <svg
+                    className="w-4 h-4 ml-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
                   >
-                    {tag}
-                  </span>
-                ))}
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M14 5l7 7m0 0l-7 7m7-7H3"
+                    />
+                  </svg>
+                </a>
               </div>
-              <a
-                href={project.link}
-                className="text-blue-600 hover:text-blue-800 font-semibold text-sm"
-                aria-label={`View ${project.title} project`}
-              >
-                View Project →
-              </a>
             </div>
           ))}
         </div>
