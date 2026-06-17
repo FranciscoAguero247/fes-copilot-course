@@ -47,7 +47,7 @@ const HeroSection = () => (
         technologies.
       </p>
       <a
-        href="#contact"
+        href="mailto:blast255@live.com"
         className="inline-block bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition"
         aria-label="Contact me"
       >
