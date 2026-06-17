@@ -105,7 +105,7 @@ const ProjectsGrid = () => {
           {projects.map(project => (
             <div
               key={project.id}
-              className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col"
+              className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col hover:-translate-y-2"
             >
               {/* Image Placeholder */}
               <div className="bg-gray-200 h-48 flex items-center justify-center border-b border-gray-100">
