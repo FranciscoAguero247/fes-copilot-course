@@ -202,7 +202,7 @@ const Footer = () => (
           <h4 className="text-white font-semibold mb-4">Follow</h4>
           <div className="flex gap-4">
             <a
-              href="https://github.com"
+              href="https://github.com/FranciscoAguero247"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
@@ -211,7 +211,7 @@ const Footer = () => (
               GitHub
             </a>
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/francisco-aguero-39665a236"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
@@ -220,13 +220,13 @@ const Footer = () => (
               LinkedIn
             </a>
             <a
-              href="https://twitter.com"
+              href="https://www.facebook.com/francisco.aguero.1253"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Twitter"
+              aria-label="Facebook"
               className="hover:text-white transition"
             >
-              Twitter
+              Facebook
             </a>
           </div>
         </div>
