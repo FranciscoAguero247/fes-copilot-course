@@ -13,85 +13,202 @@
  * Follow the step-by-step instructions marked below.
  */
 
-export default function Module5Portfolio() {
+const Header = () => (
+  <header className="sticky top-0 z-50 bg-white shadow-sm">
+    <nav className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+      <h1 className="text-2xl font-bold text-gray-900">Portfolio</h1>
+      <ul className="flex gap-6">
+        <li>
+          <a href="#projects" className="text-gray-600 hover:text-gray-900 transition">
+            Projects
+          </a>
+        </li>
+        <li>
+          <a href="#about" className="text-gray-600 hover:text-gray-900 transition">
+            About
+          </a>
+        </li>
+        <li>
+          <a href="#contact" className="text-gray-600 hover:text-gray-900 transition">
+            Contact
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+)
+
+const HeroSection = () => (
+  <section className="bg-gradient-to-br from-blue-600 to-blue-800 text-white py-20 px-6">
+    <div className="max-w-4xl mx-auto text-center">
+      <h2 className="text-5xl font-bold mb-4">Welcome to My Portfolio</h2>
+      <p className="text-xl text-blue-100 mb-8">
+        Showcasing projects built with modern web technologies
+      </p>
+      <button
+        className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition"
+        aria-label="Contact me button"
+      >
+        <a href="#contact">Contact Me</a>
+      </button>
+    </div>
+  </section>
+)
+
+interface ProjectCard {
+  id: number
+  title: string
+  description: string
+  tags: string[]
+  link: string
+}
+
+const ProjectsGrid = () => {
+  const projects: ProjectCard[] = [
+    {
+      id: 1,
+      title: 'E-Commerce Platform',
+      description: 'A full-stack e-commerce solution with React, Node.js, and MongoDB',
+      tags: ['React', 'Node.js', 'MongoDB'],
+      link: '#'
+    },
+    {
+      id: 2,
+      title: 'Task Management App',
+      description: 'Real-time collaborative task manager with WebSocket integration',
+      tags: ['Next.js', 'TypeScript', 'Firebase'],
+      link: '#'
+    },
+    {
+      id: 3,
+      title: 'Weather Dashboard',
+      description: 'Interactive weather application with real-time data and forecasts',
+      tags: ['React', 'API', 'Tailwind CSS'],
+      link: '#'
+    },
+    {
+      id: 4,
+      title: 'Portfolio Generator',
+      description: 'Automated portfolio builder for developers using AI',
+      tags: ['Next.js', 'AI API', 'Automation'],
+      link: '#'
+    }
+  ]
+
   return (
-    <div className="min-h-screen">
-      {/* ==========================================
-       * 📋 PROJECT OVERVIEW
-       * ==========================================
-       *
-       * You'll build a portfolio with these sections:
-       * ✓ Header with navigation
-       * ✓ Hero section with name and tagline
-       * ✓ Projects grid with cards
-       * ✓ About section with bio and skills
-       * ✓ Contact form
-       * ✓ Footer with social links
-       *
-       * Use Agent Mode (Claude or Auto model) for big sections,
-       * then Edit Mode (Inline Chat) for refinements!
-       *
-       * ========================================== */}
+    <section id="projects" className="py-16 px-6 bg-gray-50">
+      <div className="max-w-6xl mx-auto">
+        <h3 className="text-4xl font-bold mb-12 text-center">Recent Projects</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {projects.map((project) => (
+            <div
+              key={project.id}
+              className="bg-white rounded-lg shadow hover:shadow-lg transition p-6"
+            >
+              <div className="bg-gray-200 h-32 rounded mb-4 flex items-center justify-center">
+                <span className="text-gray-400">Image</span>
+              </div>
+              <h4 className="text-xl font-semibold mb-2 text-gray-900">{project.title}</h4>
+              <p className="text-gray-600 mb-4 text-sm">{project.description}</p>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {project.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="bg-blue-100 text-blue-700 text-xs px-3 py-1 rounded-full"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <a
+                href={project.link}
+                className="text-blue-600 hover:text-blue-800 font-semibold text-sm"
+                aria-label={`View ${project.title} project`}
+              >
+                View Project →
+              </a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
 
-      {/* ==========================================
-       * 🎯 STEP 1: SCAFFOLD BASE LAYOUT
-       * ==========================================
-       *
-       * ✅ TODO: CREATE THE BASIC LAYOUT STRUCTURE
-       *
-       * Instructions:
-       * 1. Open Copilot Chat panel
-       * 2. Set model to Claude or Auto
-       * 3. Ask: "Create a portfolio layout with header, hero section,
-       *         projects grid, and footer"
-       * 4. Review the scaffolded structure
-       * 5. Accept if it has all four sections
-       *
-       * IMPORTANT: Replace this entire component with the generated layout!
-       *
-       * ========================================== */}
-
-      <div className="p-8 max-w-4xl mx-auto">
-        <div className="bg-yellow-50 border-2 border-yellow-500 rounded-lg p-6 mb-8">
-          <h1 className="text-3xl font-bold mb-4">🚀 Ready to Build Your Portfolio?</h1>
-          <p className="mb-4 text-gray-700">
-            This is where your portfolio will live. Follow the steps below to build it with Copilot
-            as your coding partner!
-          </p>
-          <div className="bg-white rounded p-4 border border-yellow-300">
-            <h2 className="font-semibold mb-2">Quick Start Guide:</h2>
-            <ol className="list-decimal list-inside space-y-2 text-sm">
-              <li>Read STEP 1 instructions above</li>
-              <li>Open Copilot Chat (Ctrl/Cmd + Shift + I)</li>
-              <li>Switch to Agent Mode with Claude/Auto model</li>
-              <li>Ask Copilot to create the base layout</li>
-              <li>Replace this placeholder with your new layout</li>
-              <li>Continue with STEP 2, 3, 4, etc.</li>
-            </ol>
+const Footer = () => (
+  <footer className="bg-gray-900 text-gray-300 py-12 px-6">
+    <div className="max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <div>
+          <h3 className="text-white font-bold mb-4">Portfolio</h3>
+          <p className="text-sm">Building amazing web experiences with modern technologies.</p>
+        </div>
+        <div>
+          <h4 className="text-white font-semibold mb-4">Quick Links</h4>
+          <ul className="space-y-2 text-sm">
+            <li>
+              <a href="#projects" className="hover:text-white transition">
+                Projects
+              </a>
+            </li>
+            <li>
+              <a href="#about" className="hover:text-white transition">
+                About
+              </a>
+            </li>
+            <li>
+              <a href="#contact" className="hover:text-white transition">
+                Contact
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 className="text-white font-semibold mb-4">Follow</h4>
+          <div className="flex gap-4">
+            <a
+              href="https://github.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+              className="hover:text-white transition"
+            >
+              GitHub
+            </a>
+            <a
+              href="https://linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="hover:text-white transition"
+            >
+              LinkedIn
+            </a>
+            <a
+              href="https://twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Twitter"
+              className="hover:text-white transition"
+            >
+              Twitter
+            </a>
           </div>
         </div>
-
-        {/* Placeholder sections to guide structure */}
-        <section className="border-2 border-dashed border-gray-300 rounded-lg p-8 mb-6">
-          <h2 className="text-xl font-semibold text-gray-500">📍 Header Section</h2>
-          <p className="text-gray-400">Your navigation will go here</p>
-        </section>
-
-        <section className="border-2 border-dashed border-gray-300 rounded-lg p-8 mb-6">
-          <h2 className="text-xl font-semibold text-gray-500">📍 Hero Section</h2>
-          <p className="text-gray-400">Your introduction and tagline will go here</p>
-        </section>
-
-        <section className="border-2 border-dashed border-gray-300 rounded-lg p-8 mb-6">
-          <h2 className="text-xl font-semibold text-gray-500">📍 Projects Grid</h2>
-          <p className="text-gray-400">Your project cards will go here</p>
-        </section>
-
-        <section className="border-2 border-dashed border-gray-300 rounded-lg p-8 mb-6">
-          <h2 className="text-xl font-semibold text-gray-500">📍 Footer</h2>
-          <p className="text-gray-400">Your social links will go here</p>
-        </section>
       </div>
+      <div className="border-t border-gray-800 pt-8 text-center text-sm">
+        <p>&copy; 2024 Portfolio. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+)
+
+export default function Module5Portfolio() {
+  return (
+    <div className="min-h-screen bg-white">
+      <Header />
+      <HeroSection />
+      <ProjectsGrid />
 
       {/* ==========================================
        * 🎯 STEP 2: FILL IN THE HERO SECTION
