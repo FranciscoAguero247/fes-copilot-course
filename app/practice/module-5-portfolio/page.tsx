@@ -1,226 +1,228 @@
 'use client'
 
-import { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 /**
- * MODULE 5: Final Project - Portfolio Website
- *
- * This is your capstone project! You'll build a complete personal portfolio
- * website using everything you've learned:
- * - Agent Mode for scaffolding large sections
- * - Edit Mode for surgical refinements
- * - Ask Mode for guidance and improvements
- * - Your rules for consistent styling
- *
- * Follow the step-by-step instructions marked below.
+ * MODULE 5: Final Project - Portfolio Website (Unified Release - Fixed Theme Toggle)
  */
-
-const Header = () => (
-  <header className="sticky top-0 z-50 bg-white shadow-sm">
-    <nav className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-      <h1 className="text-2xl font-bold text-gray-900">Portfolio</h1>
-      <ul className="flex gap-6">
-        <li>
-          <a href="#projects" className="text-gray-600 hover:text-gray-900 transition">
-            Projects
-          </a>
-        </li>
-        <li>
-          <a href="#about" className="text-gray-600 hover:text-gray-900 transition">
-            About
-          </a>
-        </li>
-        <li>
-          <a href="#contact" className="text-gray-600 hover:text-gray-900 transition">
-            Contact
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </header>
-)
-
-const HeroSection = () => (
-  <section className="bg-gradient-to-br from-blue-600 to-blue-800 text-white py-20 px-6">
-    <div className="max-w-4xl mx-auto text-center">
-      <h2 className="text-5xl font-bold mb-4">Hi, I'm Francisco Aguero</h2>
-      <p className="text-xl text-blue-100 mb-8">
-        Full Stack Developer crafting performant and accessible web experiences with modern
-        technologies.
-      </p>
-      <a
-        href="mailto:blast255@live.com"
-        className="inline-block bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition"
-        aria-label="Contact me"
-      >
-        Contact Me
-      </a>
-    </div>
-  </section>
-)
 
 interface ProjectCard {
   id: number
   title: string
   description: string
   tags: string[]
-  link: string
+  liveUrl: string
+  githubUrl: string
 }
 
+// ==========================================
+// 🎯 COMPONENTS: HEADER & NAVIGATION
+// ==========================================
+const Header = ({ isDark, toggleDark }: { isDark: boolean; toggleDark: () => void }) => (
+  <header className="sticky top-0 z-50 backdrop-blur-md border-b transition-colors duration-300 bg-white/80 dark:bg-slate-900/80 border-slate-200 dark:border-slate-800">
+    <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="#" className="font-bold text-xl tracking-tight hover:opacity-80 transition-opacity text-slate-900 dark:text-white">
+        Dev<span className="text-blue-600 dark:text-blue-400">Portfolio.</span>
+      </a>
+      
+      <div className="flex items-center gap-6">
+        <ul className="hidden md:flex space-x-6 text-sm font-medium">
+          <li><a href="#projects" className="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Projects</a></li>
+          <li><a href="#about" className="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">About</a></li>
+          <li><a href="#contact" className="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Contact</a></li>
+        </ul>
+
+        {/* Dark Mode Toggle Button */}
+        <button
+          onClick={toggleDark}
+          className="p-2 rounded-lg border transition-all duration-200 bg-slate-100 border-slate-300 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:border-slate-700 dark:text-yellow-400 dark:hover:bg-slate-700"
+          aria-label="Toggle layout theme color"
+        >
+          {isDark ? (
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m0 13.5V21M4.22 4.22l1.56 1.56m12.44 12.44l1.56 1.56M21 12h-2.25M5.25 12H3m3.22 5.78l1.56-1.56M17.66 4.22l-1.56 1.56M12 7.5a4.5 4.5 0 100 9 4.5 4.5 0 000-9z" />
+            </svg>
+          ) : (
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+            </svg>
+          )}
+        </button>
+      </div>
+    </nav>
+  </header>
+)
+
+// ==========================================
+// 🎯 COMPONENTS: HERO SECTION
+// ==========================================
+const HeroSection = () => (
+  <section className="flex flex-col items-center justify-center text-center pt-8 md:pt-16 animate-fade-in">
+    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase mb-4 bg-blue-50 text-blue-700 dark:bg-blue-950/50 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+      Available For New Opportunities
+    </div>
+    <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight max-w-4xl mb-6 text-slate-900 dark:text-white leading-tight">
+      Hi, I'm Francisco Aguero. Building Web Applications With <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-500 dark:from-blue-400 dark:to-indigo-300">Precision Code</span>
+    </h1>
+    <p className="text-base sm:text-lg md:text-xl max-w-2xl mb-8 text-slate-600 dark:text-slate-400">
+      Full Stack Developer crafting performant, scalable, and accessible web experiences using modern technologic architectures.
+    </p>
+    <div className="flex flex-col sm:flex-row gap-4">
+      <a 
+        href="mailto:blast255@live.com" 
+        className="inline-flex items-center justify-center px-6 py-3 rounded-lg font-medium text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition-all shadow-md shadow-blue-500/10 hover:shadow-lg"
+        aria-label="Send email to Francisco Aguero"
+      >
+        Contact Me
+      </a>
+      <a 
+        href="#projects" 
+        className="inline-flex items-center justify-center px-6 py-3 rounded-lg font-medium border transition-all text-slate-700 border-slate-300 hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800 dark:text-slate-300"
+      >
+        View Work
+      </a>
+    </div>
+  </section>
+)
+
+// ==========================================
+// 🎯 COMPONENTS: PROJECTS GRID
+// ==========================================
 const ProjectsGrid = () => {
   const projects: ProjectCard[] = [
     {
       id: 1,
-      title: 'E-Commerce Platform',
-      description: 'A full-stack e-commerce solution with React, Node.js, and MongoDB',
-      tags: ['React', 'Node.js', 'MongoDB'],
-      link: '#',
+      title: 'E-Commerce Platform Architecture',
+      description: 'A full-stack e-commerce architecture utilizing scalable React components, server environments, and database caches.',
+      tags: ['React', 'Node.js', 'MongoDB', 'Tailwind CSS'],
+      liveUrl: '#',
+      githubUrl: '#',
     },
     {
       id: 2,
-      title: 'Task Management App',
-      description: 'Real-time collaborative task manager with WebSocket integration',
-      tags: ['Next.js', 'TypeScript', 'Firebase'],
-      link: '#',
+      title: 'Real-Time Task Analytics Engine',
+      description: 'Collaborative pipeline platform tracking production workflow metrics integrated with real-time websocket updates.',
+      tags: ['Next.js', 'TypeScript', 'Firebase', 'WebSockets'],
+      liveUrl: '#',
+      githubUrl: '#',
     },
     {
       id: 3,
-      title: 'Weather Dashboard',
-      description: 'Interactive weather application with real-time data and forecasts',
-      tags: ['React', 'API', 'Tailwind CSS'],
-      link: '#',
+      title: 'Interactive Weather Dashboard',
+      description: 'Dynamic geographic parsing layout connecting modern location APIs with historical forecasting datasets.',
+      tags: ['React', 'REST APIs', 'Tailwind CSS', 'ChartJS'],
+      liveUrl: '#',
+      githubUrl: '#',
     },
     {
       id: 4,
-      title: 'Portfolio Generator',
-      description: 'Automated portfolio builder for developers using AI',
-      tags: ['Next.js', 'AI API', 'Automation'],
-      link: '#',
+      title: 'Automated Portfolio Generator',
+      description: 'System utility interpreting dynamic data definitions into optimized, responsive UI structures automatically.',
+      tags: ['Next.js', 'AI API', 'Automation', 'TypeScript'],
+      liveUrl: '#',
+      githubUrl: '#',
     },
   ]
 
   return (
-    <section id="projects" className="py-20 px-6 bg-gray-50">
-      <div className="max-w-6xl mx-auto">
-        <h2 className="text-4xl font-bold mb-12 text-center text-gray-900">Featured Projects</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map(project => (
-            <div
-              key={project.id}
-              className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col"
-            >
-              {/* Image Placeholder */}
-              <div className="bg-gray-200 h-48 flex items-center justify-center border-b border-gray-100">
+    <section id="projects" className="scroll-mt-20">
+      <div className="text-center md:text-left mb-12">
+        <h2 className="text-3xl font-bold tracking-tight mb-2 text-slate-900 dark:text-white">Featured Projects</h2>
+        <p className="text-slate-600 dark:text-slate-400">A handpicked selection of responsive applications built with maintainable structure in mind.</p>
+      </div>
+
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {projects.map((project) => (
+          <article 
+            key={project.id} 
+            className="group flex flex-col justify-between border rounded-xl p-5 transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl bg-white border-slate-200 hover:border-slate-300 shadow-slate-100 dark:bg-slate-900 dark:border-slate-800 dark:hover:border-slate-700 dark:shadow-slate-950/30"
+          >
+            <div>
+              <div className="w-full aspect-video rounded-lg mb-4 flex items-center justify-center border border-dashed bg-slate-100 border-slate-300 dark:bg-slate-800/50 dark:border-slate-700">
                 <svg
-                  className="w-12 h-12 text-gray-400"
+                  className="w-10 h-10 text-slate-400 group-hover:scale-110 transition-transform duration-300"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
               </div>
+              <h3 className="text-xl font-bold mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors text-slate-900 dark:text-white">
+                {project.title}
+              </h3>
+              <p className="text-sm mb-4 line-clamp-3 text-slate-600 dark:text-slate-400 leading-relaxed">
+                {project.description}
+              </p>
+            </div>
 
-              <div className="p-6 flex flex-col flex-grow">
-                <h3 className="text-xl font-bold mb-2 text-gray-900">{project.title}</h3>
-                <p className="text-gray-600 mb-4 text-sm leading-relaxed flex-grow">
-                  {project.description}
-                </p>
-
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {project.tags.map(tag => (
-                    <span
-                      key={tag}
-                      className="bg-blue-50 text-blue-600 text-xs font-semibold px-2.5 py-0.5 rounded"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                <a
-                  href={project.link}
-                  className="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold text-sm transition-colors"
-                  aria-label={`View details for ${project.title}`}
-                >
-                  View Project
-                  <svg
-                    className="w-4 h-4 ml-1"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M14 5l7 7m0 0l-7 7m7-7H3"
-                    />
-                  </svg>
+            <div>
+              <div className="flex flex-wrap gap-1.5 mb-4">
+                {project.tags.map(tag => (
+                  <span key={tag} className="text-xs px-2.5 py-0.5 rounded-md font-medium bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <div className="flex justify-between items-center text-sm pt-2 border-t border-slate-100 dark:border-slate-800">
+                <a href={project.liveUrl} className="font-semibold text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center gap-1" aria-label={`View deployment live for ${project.title}`}>
+                  Live Demo ↗
+                </a>
+                <a href={project.githubUrl} className="hover:underline text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200">
+                  Repository
                 </a>
               </div>
             </div>
-          ))}
-        </div>
+          </article>
+        ))}
       </div>
     </section>
   )
 }
 
+// ==========================================
+// 🎯 COMPONENTS: ABOUT ME SECTION
+// ==========================================
 const AboutSection = () => {
   const skills = [
-    'JavaScript',
-    'TypeScript',
-    'React',
-    'Next.js',
-    'Node.js',
-    'Express',
-    'MongoDB',
-    'PostgreSQL',
-    'Tailwind CSS',
-    'Git',
-    'REST APIs',
-    'GraphQL',
+    'JavaScript', 'TypeScript', 'React', 'Next.js',
+    'Node.js', 'Express', 'MongoDB', 'PostgreSQL',
+    'Tailwind CSS', 'Git', 'REST APIs', 'GraphQL',
   ]
 
   return (
-    <section id="about" className="py-20 px-6 bg-white">
-      <div className="max-w-3xl mx-auto text-center">
-        <div className="flex flex-col items-center">
-          <div className="relative group mb-12">
-            <div className="w-48 h-48 bg-gray-200 rounded-2xl flex items-center justify-center overflow-hidden border-4 border-gray-100 shadow-xl">
-              <svg className="w-20 h-20 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  fillRule="evenodd"
-                  d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                  clipRule="evenodd"
-                />
+    <section id="about" className="scroll-mt-20 max-w-4xl mx-auto">
+      <div className="text-center mb-12">
+        <h2 className="text-3xl font-bold tracking-tight mb-2 text-slate-900 dark:text-white">About Me</h2>
+        <p className="text-slate-600 dark:text-slate-400">A look into my background workflow strategies, frameworks, and technical configurations.</p>
+      </div>
+
+      <div className="grid gap-8 md:grid-cols-3 items-start">
+        <div className="flex flex-col items-center text-center md:col-span-1">
+          <div className="w-36 h-36 rounded-2xl border-2 p-1 border-blue-500 mb-4 bg-gradient-to-tr from-slate-200 to-slate-100 dark:from-slate-800 dark:to-slate-900 shadow-xl flex items-center justify-center overflow-hidden">
+            <div className="w-full h-full rounded-xl flex items-center justify-center bg-slate-200 dark:bg-slate-800">
+              <svg className="w-16 h-16 text-slate-400 dark:text-slate-500" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
               </svg>
             </div>
           </div>
+          <h3 className="font-bold text-lg text-slate-900 dark:text-white">Francisco Aguero</h3>
+          <p className="text-sm text-slate-500 dark:text-slate-400">Full Stack Developer</p>
+        </div>
 
-          <h2 className="text-4xl font-bold mb-8 text-gray-900">About Me</h2>
-          <p className="text-lg text-gray-600 mb-10 leading-relaxed">
-            I'm a passionate Full Stack Developer with a focus on building high-quality, accessible,
-            and performant web applications. With experience across the modern web stack, I enjoy
-            solving complex problems and turning ideas into reality through clean code.
+        <div className="space-y-6 md:col-span-2 text-center md:text-left">
+          <p className="leading-relaxed text-slate-700 dark:text-slate-300">
+            I'm a passionate Full Stack Developer focused on creating high-quality, accessible, and performant web applications. With seasoned experience mapping the modern web stack ecosystem, I enjoy breaking down complex algorithmic problems into intuitive, production-grade applications.
           </p>
-
-          <h3 className="text-xl font-bold mb-6 text-gray-900">Technical Skills</h3>
-          <div className="flex flex-wrap gap-3 justify-center">
-            {skills.map(skill => (
-              <span
-                key={skill}
-                className="bg-blue-50 text-blue-700 px-4 py-2 rounded-lg text-sm font-medium border border-blue-100 hover:bg-blue-100 transition-colors cursor-default"
-              >
-                {skill}
-              </span>
-            ))}
+          <div>
+            <h4 className="font-semibold text-sm uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-3">Core Expertise Matrix</h4>
+            <div className="flex flex-wrap gap-2 justify-center md:justify-start">
+              {skills.map(skill => (
+                <span key={skill} className="bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400 px-3 py-1.5 rounded-lg text-sm font-medium border border-blue-100 dark:border-blue-900 transition-colors cursor-default">
+                  {skill}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -228,6 +230,9 @@ const AboutSection = () => {
   )
 }
 
+// ==========================================
+// 🎯 COMPONENTS: VALIDATED CONTACT SECTION
+// ==========================================
 const ContactSection = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' })
   const [errors, setErrors] = useState<{ [key: string]: string }>({})
@@ -249,166 +254,169 @@ const ContactSection = () => {
     e.preventDefault()
     const validationErrors = validate()
     if (Object.keys(validationErrors).length === 0) {
-      // Simulate form submission
-      console.log('Form submitted:', formData)
       setIsSubmitted(true)
       setFormData({ name: '', email: '', message: '' })
       setErrors({})
+      setTimeout(() => setIsSubmitted(false), 6000)
     } else {
       setErrors(validationErrors)
     }
   }
 
-  const isFormValid = 
-    formData.name.trim() !== '' && 
-    /\S+@\S+\.\S+/.test(formData.email) && 
-    formData.message.trim() !== '';
+  const isFormValid =
+    formData.name.trim() !== '' &&
+    /\S+@\S+\.\S+/.test(formData.email) &&
+    formData.message.trim() !== ''
 
   return (
-    <section id="contact" className="py-20 px-6 bg-gray-50">
-      <div className="max-w-3xl mx-auto">
-        <h2 className="text-4xl font-bold mb-12 text-center text-gray-900">Get In Touch</h2>
-        {isSubmitted ? (
-          <div className="bg-blue-50 border border-blue-200 text-blue-700 p-8 rounded-2xl text-center shadow-sm">
-            <h3 className="text-2xl font-bold mb-2">Message Sent!</h3>
-            <p>Thanks for reaching out. I'll get back to you as soon as I can.</p>
-            <button 
-              onClick={() => setIsSubmitted(false)}
-              className="mt-6 text-blue-600 font-semibold hover:underline transition"
-            >
-              Send another message
-            </button>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 space-y-6">
-            <div>
-              <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">Name</label>
-              <input
-                type="text"
-                id="name"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className={`w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-blue-500 outline-none transition-all ${errors.name ? 'border-red-500' : 'border-gray-200'}`}
-                placeholder="Your name"
-              />
-              {errors.name && <p className="text-red-500 text-xs mt-1 font-medium">{errors.name}</p>}
-            </div>
-            <div>
-              <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">Email</label>
-              <input
-                type="email"
-                id="email"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className={`w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-blue-500 outline-none transition-all ${errors.email ? 'border-red-500' : 'border-gray-200'}`}
-                placeholder="your@email.com"
-              />
-              {errors.email && <p className="text-red-500 text-xs mt-1 font-medium">{errors.email}</p>}
-            </div>
-            <div>
-              <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">Message</label>
-              <textarea
-                id="message"
-                rows={5}
-                value={formData.message}
-                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                className={`w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-blue-500 outline-none transition-all ${errors.message ? 'border-red-500' : 'border-gray-200'}`}
-                placeholder="What's on your mind?"
-              />
-              {errors.message && <p className="text-red-500 text-xs mt-1 font-medium">{errors.message}</p>}
-            </div>
-            <button
-              type="submit"
-              disabled={!isFormValid}
-              className="w-full bg-blue-600 text-white font-bold py-4 rounded-lg hover:bg-blue-700 transition-all shadow-lg active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100"
-            >
-              Send Message
-            </button>
-          </form>
-        )}
+    <section id="contact" className="scroll-mt-20 max-w-xl mx-auto">
+      <div className="text-center mb-8">
+        <h2 className="text-3xl font-bold tracking-tight mb-2 text-slate-900 dark:text-white">Get In Touch</h2>
+        <p className="text-slate-600 dark:text-slate-400">Drop a line down below to initiate projects or career connection opportunities.</p>
       </div>
+
+      {isSubmitted ? (
+        <div className="bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900 text-emerald-800 dark:text-emerald-300 p-8 rounded-2xl text-center shadow-sm animate-fade-in">
+          <h3 className="text-2xl font-bold mb-2">Message Dispatched!</h3>
+          <p className="text-sm mb-4">Thanks for reaching out. Your placeholder submission verified perfectly.</p>
+          <button onClick={() => setIsSubmitted(false)} className="text-sm font-semibold text-blue-600 dark:text-blue-400 hover:underline transition">
+            Send another message
+          </button>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit} className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 space-y-4 transition-colors">
+          <div>
+            <label htmlFor="name" className="block text-sm font-medium mb-1.5 text-slate-700 dark:text-slate-300">Name</label>
+            <input
+              type="text"
+              id="name"
+              value={formData.name}
+              onChange={e => setFormData({ ...formData, name: e.target.value })}
+              className={`w-full px-3.5 py-2 rounded-lg text-sm border focus:outline-none focus:ring-2 focus:ring-blue-500 outline-none transition-all dark:bg-slate-800 dark:text-white ${errors.name ? 'border-red-500 focus:ring-red-500' : 'border-slate-200 dark:border-slate-700'}`}
+              placeholder="Your name"
+            />
+            {errors.name && <p className="text-red-500 text-xs mt-1 font-medium">{errors.name}</p>}
+          </div>
+
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium mb-1.5 text-slate-700 dark:text-slate-300">Email Address</label>
+            <input
+              type="email"
+              id="email"
+              value={formData.email}
+              onChange={e => setFormData({ ...formData, email: e.target.value })}
+              className={`w-full px-3.5 py-2 rounded-lg text-sm border focus:outline-none focus:ring-2 focus:ring-blue-500 outline-none transition-all dark:bg-slate-800 dark:text-white ${errors.email ? 'border-red-500 focus:ring-red-500' : 'border-slate-200 dark:border-slate-700'}`}
+              placeholder="your@email.com"
+            />
+            {errors.email && <p className="text-red-500 text-xs mt-1 font-medium">{errors.email}</p>}
+          </div>
+
+          <div>
+            <label htmlFor="message" className="block text-sm font-medium mb-1.5 text-slate-700 dark:text-slate-300">Message</label>
+            <textarea
+              id="message"
+              rows={4}
+              value={formData.message}
+              onChange={e => setFormData({ ...formData, message: e.target.value })}
+              className={`w-full px-3.5 py-2 rounded-lg text-sm border focus:outline-none focus:ring-2 focus:ring-blue-500 outline-none transition-all dark:bg-slate-800 dark:text-white ${errors.message ? 'border-red-500 focus:ring-red-500' : 'border-slate-200 dark:border-slate-700'}`}
+              placeholder="What's on your mind?"
+            />
+            {errors.message && <p className="text-red-500 text-xs mt-1 font-medium">{errors.message}</p>}
+          </div>
+
+          <button
+            type="submit"
+            disabled={!isFormValid}
+            className="w-full bg-blue-600 text-white font-bold py-2.5 rounded-lg text-sm transition-all shadow-md hover:bg-blue-700 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100"
+          >
+            Send Message
+          </button>
+        </form>
+      )}
     </section>
   )
 }
 
+// ==========================================
+// 🎯 COMPONENTS: FOOTER
+// ==========================================
 const Footer = () => (
-  <footer className="bg-gray-900 text-gray-300 py-20 px-6">
-    <div className="max-w-6xl mx-auto">
+  <footer className="mt-24 border-t text-sm bg-slate-50 border-slate-200 text-slate-600 dark:bg-slate-950 dark:border-slate-800 dark:text-slate-400 transition-colors duration-300">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
         <div>
-          <h3 className="text-white font-bold mb-4">Portfolio</h3>
-          <p className="text-sm">Building amazing web experiences with modern technologies.</p>
+          <h3 className="text-slate-900 dark:text-blue-400 font-bold mb-3">Francisco Aguero</h3>
+          <p className="text-xs leading-relaxed max-w-xs">Building responsive, clean web experiences mapping optimization across the full developer lifecycle stack.</p>
         </div>
         <div>
-          <h4 className="text-white font-semibold mb-4">Quick Links</h4>
-          <ul className="space-y-2 text-sm">
-            <li>
-              <a href="#projects" className="hover:text-white transition">
-                Projects
-              </a>
-            </li>
-            <li>
-              <a href="#about" className="hover:text-white transition">
-                About
-              </a>
-            </li>
-            <li>
-              <a href="#contact" className="hover:text-white transition">
-                Contact
-              </a>
-            </li>
+          <h4 className="text-slate-900 dark:text-blue-400 font-semibold mb-3">Quick Navigation Links</h4>
+          <ul className="space-y-1.5 text-xs">
+            <li><a href="#projects" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Projects Grid</a></li>
+            <li><a href="#about" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">About Matrix</a></li>
+            <li><a href="#contact" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Contact Form</a></li>
           </ul>
         </div>
         <div>
-          <h4 className="text-white font-semibold mb-4">Follow</h4>
-          <div className="flex gap-4">
-            <a
-              href="https://github.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub"
-              className="hover:text-white transition"
-            >
-              GitHub
-            </a>
-            <a
-              href="https://linkedin.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn"
-              className="hover:text-white transition"
-            >
-              LinkedIn
-            </a>
-            <a
-              href="https://twitter.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Twitter"
-              className="hover:text-white transition"
-            >
-              Twitter
-            </a>
+          <h4 className="text-slate-900 dark:text-blue-400 font-semibold mb-3">Follow Platforms</h4>
+          <div className="flex gap-4 text-xs">
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub Developer Profile" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">GitHub</a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Corporate Profile" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">LinkedIn</a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter Social Profile" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Twitter</a>
           </div>
         </div>
       </div>
-      <div className="border-t border-gray-800 pt-8 text-center text-sm">
-        <p>&copy; 2024 Portfolio. All rights reserved.</p>
+      <div className="border-t pt-6 text-center text-xs border-slate-200 dark:border-slate-800">
+        <p>&copy; {new Date().getFullYear()} Francisco Aguero. All rights reserved.</p>
       </div>
     </div>
   </footer>
 )
 
+// ==========================================
+// 🎯 MAIN CONTAINER EXPORT
+// ==========================================
 export default function Module5Portfolio() {
+  const [isDark, setIsDark] = useState(false)
+
+  useEffect(() => {
+    // Explicitly toggle the global class on document element root
+    if (isDark) {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+  }, [isDark])
+
   return (
-    <div className="min-h-screen bg-white">
-      <Header />
-      <HeroSection />
-      <ProjectsGrid />
-      <AboutSection />
-      <ContactSection />
+    // Explicitly binding the 'dark' variant style directly to the parent wrapper class definition ensures background values re-render instantly inside Next.js layout sheets.
+    <div className={`min-h-screen transition-colors duration-300 ${isDark ? 'dark bg-slate-900 text-slate-100' : 'bg-slate-50 text-slate-900'}`}>
+      <Header isDark={isDark} toggleDark={() => setIsDark(!isDark)} />
+      
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-24 md:space-y-32">
+        <HeroSection />
+        <hr className="border-slate-200 dark:border-slate-800" />
+        <ProjectsGrid />
+        <hr className="border-slate-200 dark:border-slate-800" />
+        <AboutSection />
+        <hr className="border-slate-200 dark:border-slate-800" />
+        <ContactSection />
+      </main>
 
       <Footer />
+
+      {/* Global CSS Injection Layer */}
+      <style jsx global>{`
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(12px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+          animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        html {
+          scroll-behavior: smooth;
+        }
+      `}</style>
     </div>
   )
 }
