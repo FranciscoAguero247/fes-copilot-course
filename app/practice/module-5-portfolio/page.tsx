@@ -105,7 +105,7 @@ const ProjectsGrid = () => {
           {projects.map(project => (
             <div
               key={project.id}
-              className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col hover:-translate-y-2"
+              className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col"
             >
               {/* Image Placeholder */}
               <div className="bg-gray-200 h-48 flex items-center justify-center border-b border-gray-100">
@@ -170,6 +170,65 @@ const ProjectsGrid = () => {
   )
 }
 
+const AboutSection = () => {
+  const skills = [
+    'JavaScript',
+    'TypeScript',
+    'React',
+    'Next.js',
+    'Node.js',
+    'Express',
+    'MongoDB',
+    'PostgreSQL',
+    'Tailwind CSS',
+    'Git',
+    'REST APIs',
+    'GraphQL',
+  ]
+
+  return (
+    <section id="about" className="py-20 px-6 bg-white">
+      <div className="max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div className="relative group">
+            <div className="aspect-square bg-gray-200 rounded-2xl flex items-center justify-center overflow-hidden border-4 border-gray-100 shadow-xl">
+              <svg className="w-32 h-32 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fillRule="evenodd"
+                  d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </div>
+          </div>
+
+          <div>
+            <h2 className="text-4xl font-bold mb-6 text-gray-900">About Me</h2>
+            <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+              I'm a passionate Full Stack Developer with a focus on building high-quality,
+              accessible, and performant web applications. With experience across the modern web
+              stack, I enjoy solving complex problems and turning ideas into reality through clean
+              code.
+            </p>
+
+            <h3 className="text-xl font-bold mb-4 text-gray-900">Technical Skills</h3>
+            <div className="flex flex-wrap gap-3">
+              {skills.map(skill => (
+                <span
+                  key={skill}
+                  className="bg-blue-50 text-blue-700 px-4 py-2 rounded-lg text-sm font-medium border border-blue-100 hover:bg-blue-100 transition-colors cursor-default"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 const Footer = () => (
   <footer className="bg-gray-900 text-gray-300 py-12 px-6">
     <div className="max-w-6xl mx-auto">
@@ -202,7 +261,7 @@ const Footer = () => (
           <h4 className="text-white font-semibold mb-4">Follow</h4>
           <div className="flex gap-4">
             <a
-              href="https://github.com/FranciscoAguero247"
+              href="https://github.com"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
@@ -211,7 +270,7 @@ const Footer = () => (
               GitHub
             </a>
             <a
-              href="https://www.linkedin.com/in/francisco-aguero-39665a236"
+              href="https://linkedin.com"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
@@ -220,19 +279,19 @@ const Footer = () => (
               LinkedIn
             </a>
             <a
-              href="https://www.facebook.com/francisco.aguero.1253"
+              href="https://twitter.com"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Facebook"
+              aria-label="Twitter"
               className="hover:text-white transition"
             >
-              Facebook
+              Twitter
             </a>
           </div>
         </div>
       </div>
       <div className="border-t border-gray-800 pt-8 text-center text-sm">
-        <p>&copy; {new Date().getFullYear()} Francisco Aguero. All rights reserved.</p>
+        <p>&copy; 2024 Portfolio. All rights reserved.</p>
       </div>
     </div>
   </footer>
@@ -244,6 +303,7 @@ export default function Module5Portfolio() {
       <Header />
       <HeroSection />
       <ProjectsGrid />
+      <AboutSection />
 
       <Footer />
     </div>
