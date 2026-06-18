@@ -203,7 +203,7 @@ const AboutSection = () => {
           </div>
 
           <div>
-            <h2 className="text-4xl font-bold mb-6 text-gray-900">About Me</h2>
+            <h2 className="text-4xl font-bold mb-8 text-gray-900">About Me</h2>
             <p className="text-lg text-gray-600 mb-6 leading-relaxed">
               I'm a passionate Full Stack Developer with a focus on building high-quality,
               accessible, and performant web applications. With experience across the modern web
@@ -230,7 +230,7 @@ const AboutSection = () => {
 }
 
 const Footer = () => (
-  <footer className="bg-gray-900 text-gray-300 py-12 px-6">
+  <footer className="bg-gray-900 text-gray-300 py-20 px-6">
     <div className="max-w-6xl mx-auto">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
         <div>
