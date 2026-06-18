@@ -157,15 +157,16 @@ function BrokenCalculator() {
   const [num2, setNum2] = useState('')
   const [result, setResult] = useState(0)
 
-  // Bug: This function has issues with type conversion and error handling
   const calculate = () => {
-    const sum = num1 + num2 // Bug: String concatenation instead of addition
-    setResult(sum)
+    const sum = Number(num1) + Number(num2)
+    setResult(isNaN(sum) ? 0 : sum)
   }
 
-  // Bug: Missing divide by zero check
   const divide = () => {
-    setResult(num1 / num2)
+    const val1 = Number(num1)
+    const val2 = Number(num2)
+    if (val2 === 0) return alert('Cannot divide by zero')
+    setResult(val1 / val2)
   }
 
   return (
@@ -346,5 +347,94 @@ function UserDashboard() {
         <p className="text-center text-gray-500 py-8">No users found</p>
       )}
     </div>
+  )
+}
+
+function FeedbackForm() {
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' })
+  const [errors, setErrors] = useState<{ email?: string }>({})
+  const [isSubmitted, setIsSubmitted] = useState(false)
+
+  const isFormValid =
+    formData.name.trim() !== '' && formData.email.trim() !== '' && formData.message.trim() !== ''
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({ ...prev, [name]: value }))
+    if (name === 'email' && errors.email) setErrors({})
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(formData.email)) {
+      setErrors({ email: 'Please enter a valid email address' })
+      return
+    }
+    setIsSubmitted(true)
+  }
+
+  if (isSubmitted) {
+    return (
+      <div className="bg-green-50 border border-green-200 text-green-700 p-4 rounded-md">
+        <p className="font-semibold text-lg">Thank you!</p>
+        <p>Your feedback has been submitted successfully.</p>
+      </div>
+    )
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4 max-w-md">
+      <div>
+        <label htmlFor="fb-name" className="block text-sm font-medium text-gray-700 mb-1">
+          Name
+        </label>
+        <input
+          type="text"
+          id="fb-name"
+          name="name"
+          value={formData.name}
+          onChange={handleInputChange}
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 outline-none transition-all"
+          placeholder="Your name"
+        />
+      </div>
+      <div>
+        <label htmlFor="fb-email" className="block text-sm font-medium text-gray-700 mb-1">
+          Email
+        </label>
+        <input
+          type="email"
+          id="fb-email"
+          name="email"
+          value={formData.email}
+          onChange={handleInputChange}
+          className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-green-500 outline-none transition-all ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
+          placeholder="you@example.com"
+        />
+        {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+      </div>
+      <div>
+        <label htmlFor="fb-message" className="block text-sm font-medium text-gray-700 mb-1">
+          Message
+        </label>
+        <textarea
+          id="fb-message"
+          name="message"
+          rows={3}
+          value={formData.message}
+          onChange={handleInputChange}
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 outline-none transition-all"
+          placeholder="Your message..."
+        />
+      </div>
+      <button
+        type="submit"
+        disabled={!isFormValid}
+        className="w-full bg-green-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm active:scale-95"
+      >
+        Send Feedback
+      </button>
+    </form>
   )
 }
