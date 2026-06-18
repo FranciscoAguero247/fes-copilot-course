@@ -259,6 +259,11 @@ const ContactSection = () => {
     }
   }
 
+  const isFormValid = 
+    formData.name.trim() !== '' && 
+    /\S+@\S+\.\S+/.test(formData.email) && 
+    formData.message.trim() !== '';
+
   return (
     <section id="contact" className="py-20 px-6 bg-gray-50">
       <div className="max-w-3xl mx-auto">
@@ -314,7 +319,8 @@ const ContactSection = () => {
             </div>
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white font-bold py-4 rounded-lg hover:bg-blue-700 transition-all shadow-lg active:scale-[0.98]"
+              disabled={!isFormValid}
+              className="w-full bg-blue-600 text-white font-bold py-4 rounded-lg hover:bg-blue-700 transition-all shadow-lg active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100"
             >
               Send Message
             </button>
