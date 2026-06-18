@@ -1,5 +1,7 @@
 'use client'
 
+import { useState } from 'react'
+
 /**
  * MODULE 5: Final Project - Portfolio Website
  *
@@ -226,6 +228,103 @@ const AboutSection = () => {
   )
 }
 
+const ContactSection = () => {
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' })
+  const [errors, setErrors] = useState<{ [key: string]: string }>({})
+  const [isSubmitted, setIsSubmitted] = useState(false)
+
+  const validate = () => {
+    const newErrors: { [key: string]: string } = {}
+    if (!formData.name.trim()) newErrors.name = 'Name is required'
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required'
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address'
+    }
+    if (!formData.message.trim()) newErrors.message = 'Message is required'
+    return newErrors
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    const validationErrors = validate()
+    if (Object.keys(validationErrors).length === 0) {
+      // Simulate form submission
+      console.log('Form submitted:', formData)
+      setIsSubmitted(true)
+      setFormData({ name: '', email: '', message: '' })
+      setErrors({})
+    } else {
+      setErrors(validationErrors)
+    }
+  }
+
+  return (
+    <section id="contact" className="py-20 px-6 bg-gray-50">
+      <div className="max-w-3xl mx-auto">
+        <h2 className="text-4xl font-bold mb-12 text-center text-gray-900">Get In Touch</h2>
+        {isSubmitted ? (
+          <div className="bg-blue-50 border border-blue-200 text-blue-700 p-8 rounded-2xl text-center shadow-sm">
+            <h3 className="text-2xl font-bold mb-2">Message Sent!</h3>
+            <p>Thanks for reaching out. I'll get back to you as soon as I can.</p>
+            <button 
+              onClick={() => setIsSubmitted(false)}
+              className="mt-6 text-blue-600 font-semibold hover:underline transition"
+            >
+              Send another message
+            </button>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 space-y-6">
+            <div>
+              <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">Name</label>
+              <input
+                type="text"
+                id="name"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                className={`w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-blue-500 outline-none transition-all ${errors.name ? 'border-red-500' : 'border-gray-200'}`}
+                placeholder="Your name"
+              />
+              {errors.name && <p className="text-red-500 text-xs mt-1 font-medium">{errors.name}</p>}
+            </div>
+            <div>
+              <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+              <input
+                type="email"
+                id="email"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                className={`w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-blue-500 outline-none transition-all ${errors.email ? 'border-red-500' : 'border-gray-200'}`}
+                placeholder="your@email.com"
+              />
+              {errors.email && <p className="text-red-500 text-xs mt-1 font-medium">{errors.email}</p>}
+            </div>
+            <div>
+              <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">Message</label>
+              <textarea
+                id="message"
+                rows={5}
+                value={formData.message}
+                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                className={`w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-blue-500 outline-none transition-all ${errors.message ? 'border-red-500' : 'border-gray-200'}`}
+                placeholder="What's on your mind?"
+              />
+              {errors.message && <p className="text-red-500 text-xs mt-1 font-medium">{errors.message}</p>}
+            </div>
+            <button
+              type="submit"
+              className="w-full bg-blue-600 text-white font-bold py-4 rounded-lg hover:bg-blue-700 transition-all shadow-lg active:scale-[0.98]"
+            >
+              Send Message
+            </button>
+          </form>
+        )}
+      </div>
+    </section>
+  )
+}
+
 const Footer = () => (
   <footer className="bg-gray-900 text-gray-300 py-20 px-6">
     <div className="max-w-6xl mx-auto">
@@ -301,6 +400,7 @@ export default function Module5Portfolio() {
       <HeroSection />
       <ProjectsGrid />
       <AboutSection />
+      <ContactSection />
 
       <Footer />
     </div>
